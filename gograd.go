@@ -29,9 +29,9 @@ func main() {
 		fmt.Println("slope: ", (d2-d1)/h)
 	*/
 
-	a := Value.Float{Data: 2.0}
-	b := Value.Float{Data: -3.0}
-	c := Value.Float{Data: 10.0}
+	a := Value.Value{Data: 2.0}
+	b := Value.Value{Data: -3.0}
+	c := Value.Value{Data: 10.0}
 
 	a.GetData()
 	b.GetData()
