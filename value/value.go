@@ -4,38 +4,38 @@ import (
 	"fmt"
 )
 
-type value struct {
+type Value struct {
 	Data float64
-	Prev Tuple[*value, *value]
+	Prev Tuple[*Value, *Value]
 	Op   string
 }
 
-func CreateValue(data float64) value {
-	return value{data, Tuple[*value, *value]{nil, nil}, ""}
+func CreateValue(data float64) Value {
+	return Value{data, Tuple[*Value, *Value]{nil, nil}, ""}
 }
 
-func (v value) GetData() {
+func (v Value) GetData() {
 	fmt.Println("Data: ", v.Data)
 }
 
 // Add returns the sum of two Floats Values
-func (t value) Add(other value) value {
-	return value{t.Data + other.Data, Tuple[*value, *value]{&t, &other}, "+"}
+func (t Value) Add(other Value) Value {
+	return Value{t.Data + other.Data, Tuple[*Value, *Value]{&t, &other}, "+"}
 }
 
 // Mul returns the multiplication of two Floats Values
-func (t value) Mul(other value) value {
-	return value{t.Data * other.Data, Tuple[*value, *value]{&t, &other}, "*"}
+func (t Value) Mul(other Value) Value {
+	return Value{t.Data * other.Data, Tuple[*Value, *Value]{&t, &other}, "*"}
 }
 
-// Tuple is a generic type that represents a pair of values.
-// The first value is of type T, and the second value is of type U.
+// Tuple is a generic type that represents a pair of Values.
+// The first Value is of type T, and the second Value is of type U.
 type Tuple[T, U any] struct {
 	First  T
 	Second U
 }
 
-// TODO implement the value struct using generic type for numbers
+// TODO implement the Value struct using generic type for numbers
 // Number is a type that represents a number standard type.
 type Number interface {
 	int64 | float64 | complex128 |
