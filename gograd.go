@@ -41,5 +41,6 @@ func main() {
 	d.GetData()
 	fmt.Println(d.Prev.First.Data)
 	fmt.Println(d.Prev.Second.Data)
+	fmt.Println(d.Op)
 
 }

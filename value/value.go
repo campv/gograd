@@ -7,10 +7,11 @@ import (
 type value struct {
 	Data float64
 	Prev Tuple[*value, *value]
+	Op   string
 }
 
 func CreateValue(data float64) value {
-	return value{data, Tuple[*value, *value]{nil, nil}}
+	return value{data, Tuple[*value, *value]{nil, nil}, ""}
 }
 
 func (v value) GetData() {
@@ -19,12 +20,12 @@ func (v value) GetData() {
 
 // Add returns the sum of two Floats Values
 func (t value) Add(other value) value {
-	return value{t.Data + other.Data, Tuple[*value, *value]{&t, &other}}
+	return value{t.Data + other.Data, Tuple[*value, *value]{&t, &other}, "+"}
 }
 
 // Mul returns the multiplication of two Floats Values
 func (t value) Mul(other value) value {
-	return value{t.Data * other.Data, Tuple[*value, *value]{&t, &other}}
+	return value{t.Data * other.Data, Tuple[*value, *value]{&t, &other}, "*"}
 }
 
 type Tuple[T, U any] struct {
