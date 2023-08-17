@@ -5,13 +5,14 @@ import (
 )
 
 type Value struct {
-	Data float64
-	Prev Tuple[*Value, *Value]
-	Op   string
+	Data  float64
+	Prev  Tuple[*Value, *Value]
+	Op    string
+	Label string
 }
 
 func CreateValue(data float64) Value {
-	return Value{data, Tuple[*Value, *Value]{nil, nil}, ""}
+	return Value{data, Tuple[*Value, *Value]{nil, nil}, "", ""}
 }
 
 func (v Value) GetData() {
@@ -20,12 +21,12 @@ func (v Value) GetData() {
 
 // Add returns the sum of two Floats Values
 func (t Value) Add(other Value) Value {
-	return Value{t.Data + other.Data, Tuple[*Value, *Value]{&t, &other}, "+"}
+	return Value{t.Data + other.Data, Tuple[*Value, *Value]{&t, &other}, "+", t.Label + other.Label}
 }
 
 // Mul returns the multiplication of two Floats Values
 func (t Value) Mul(other Value) Value {
-	return Value{t.Data * other.Data, Tuple[*Value, *Value]{&t, &other}, "*"}
+	return Value{t.Data * other.Data, Tuple[*Value, *Value]{&t, &other}, "*", t.Label + other.Label}
 }
 
 // Tuple is a generic type that represents a pair of Values.

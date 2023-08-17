@@ -33,14 +33,23 @@ func main() {
 	b := Value.CreateValue(-3.0)
 	c := Value.CreateValue(10.0)
 
+	a.Label = "a"
+	b.Label = "b"
+	c.Label = "c"
 	a.GetData()
 	b.GetData()
 	c.GetData()
 
-	d := a.Mul(b).Add(c)
-	d.GetData()
-	fmt.Println(d.Prev.First.Data)
-	fmt.Println(d.Prev.Second.Data)
-	fmt.Println(d.Op)
+	e := a.Add(b)
+	e.Label = "e"
+	d := e.Add(c)
+	d.Label = "d"
+	f := Value.CreateValue(-2.0)
+	f.Label = "f"
+	L := d.Mul(f)
+	L.GetData()
+	fmt.Println(L.Prev.First.Data)
+	fmt.Println(L.Prev.Second.Data)
+	fmt.Println(L.Op)
 
 }
