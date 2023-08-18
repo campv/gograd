@@ -75,9 +75,17 @@ func main() {
 	a := z.Tanh()
 	a.Label = "a"
 
-	a.GetData()
+	a.ShowValue()
 	fmt.Println(a.Prev.First.Data)
 
 	fmt.Println(a.Op)
 	fmt.Println(a.Label)
+	// initialize gradient
+	a.Grad = 1.0
+	fmt.Println(a.Grad)
+	fmt.Println(a.Prev.First.Grad)
+	// backpropagate
+	fmt.Println("Backpropagate")
+	a.Backward()
+	fmt.Println(a.Prev.First.Grad)
 }

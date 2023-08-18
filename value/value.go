@@ -8,24 +8,28 @@ import (
 type Value struct {
 	Data     float64
 	Grad     float64
-	backward any
+	backward func(out *Value)
 	Prev     Tuple[*Value, *Value]
 	Op       string
 	Label    string
 }
 
 func CreateValue(data float64) Value {
-	return Value{data, 0.0, nil, Tuple[*Value, *Value]{nil, nil}, "", ""}
+	return Value{data, 0.0, func(out *Value) {}, Tuple[*Value, *Value]{nil, nil}, "", ""}
 }
 
-func (v Value) GetData() {
-	fmt.Println("Data: ", v.Data)
+func (v Value) ShowValue() {
+	fmt.Printf("Data: %f\nGradient: %f\nOp: %s", v.Data, v.Grad, v.Op)
+}
+
+func (v Value) Backward() {
+	v.backward(&v)
 }
 
 // Add returns the sum of two Floats Values
 func (t Value) Add(other Value) Value {
 	out := Value{t.Data + other.Data, 0.0, nil, Tuple[*Value, *Value]{&t, &other}, "+", t.Label + other.Label}
-	backward := func() {
+	backward := func(out *Value) {
 		t.Grad = 1.0 * out.Grad
 		other.Grad = 1.0 * out.Grad
 	}
@@ -36,7 +40,7 @@ func (t Value) Add(other Value) Value {
 // Mul returns the multiplication of two Floats Values
 func (t Value) Mul(other Value) Value {
 	out := Value{t.Data * other.Data, 0.0, nil, Tuple[*Value, *Value]{&t, &other}, "*", t.Label + other.Label}
-	backward := func() {
+	backward := func(out *Value) {
 		t.Grad = other.Data * out.Grad
 		other.Grad = t.Data * out.Grad
 	}
@@ -47,7 +51,7 @@ func (t Value) Mul(other Value) Value {
 // Tanh returns the hyperbolic tangent of the Float Value
 func (t Value) Tanh() Value {
 	out := Value{math.Tanh(t.Data), 0.0, nil, Tuple[*Value, *Value]{&t, nil}, "tanh", "tanh(" + t.Label + ")"}
-	backward := func() {
+	backward := func(out *Value) {
 		t.Grad = (1.0 - math.Pow(out.Data, 2.0)) * out.Grad
 	}
 	out.backward = backward
